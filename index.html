@@ -95,7 +95,12 @@
 
   /* ---------- the HUD ---------- */
   #hud { position: fixed; inset: 0; pointer-events: none; z-index: 5; display: none; }
-  body[data-mode="play"] #hud, body[data-mode="pause"] #hud { display: block; }
+  body[data-mode="play"] #hud, body[data-mode="pause"] #hud, body[data-mode="hideout"] #hud { display: block; }
+  body.hideout .haul, body.hideout #help, body.hideout #alarm { display: none !important; }
+  #hide-tag { display: none; position: absolute; left: 16px; top: calc(14px + env(safe-area-inset-top, 0px)); background: var(--paper); color: var(--paper-ink); border-radius: 4px 10px 10px 4px; padding: 10px 14px; max-width: 260px; box-shadow: 0 8px 24px rgba(0,0,0,.45); transform: rotate(-1deg); }
+  body.hideout #hide-tag { display: block; }
+  #hide-tag b { font-family: var(--display); font-weight: 400; font-size: 1.4rem; display: block; line-height: 1.1; }
+  #hide-tag span { font-family: var(--note); font-size: .85rem; }
   .haul { position: absolute; left: 16px; top: calc(14px + env(safe-area-inset-top, 0px)); background: var(--paper); color: var(--paper-ink); border-radius: 4px 10px 10px 4px; padding: 10px 14px 10px 26px; min-width: 190px; box-shadow: 0 8px 24px rgba(0,0,0,.45); transform: rotate(-1deg); }
   .haul::before { content: ''; position: absolute; left: 9px; top: 50%; width: 8px; height: 8px; margin-top: -4px; border-radius: 50%; background: var(--ink); box-shadow: inset 0 0 0 2px rgba(255,255,255,.2); }
   .haul .label { color: #6a5a40; font-size: .62rem; }
@@ -189,7 +194,7 @@
 
   /* ---------- touch controls ---------- */
   #touch { position: fixed; inset: 0; pointer-events: none; z-index: 6; display: none; }
-  body.touch[data-mode="play"] #touch { display: block; }
+  body.touch[data-mode="play"] #touch, body.touch[data-mode="hideout"] #touch { display: block; }
   .stick { position: absolute; left: 0; top: 0; width: 120px; height: 120px; border-radius: 50%; border: 2px solid rgba(255,255,255,.25); background: rgba(10,14,26,.25); opacity: 0; }
   .stick.on { opacity: 1; }
   .knob { position: absolute; left: 35px; top: 35px; width: 50px; height: 50px; border-radius: 50%; background: rgba(243,234,215,.55); }
@@ -293,7 +298,7 @@
     <h1 class="logo">Heist <b>Kings</b></h1>
     <p class="tagline">You rob the place. <em>Everyone watching is the police.</em></p>
     <p class="tagline" style="font-size:1rem;color:var(--dim);max-width:46ch">Hire your crew, sneak in, grab everything that isn’t nailed down (and unscrew what is), and get it in the van before the police turn up.</p>
-    <div class="title-row"><button class="btn go" id="to-lobby" type="button">Play with mates</button><button class="btn ghost" id="to-plan" type="button">Practise on your own</button><span class="ver" id="ver"></span></div>
+    <div class="title-row"><button class="btn go" id="to-lobby" type="button">Play with mates</button><button class="btn ghost" id="to-plan" type="button">Play on your own</button><span class="ver" id="ver"></span></div>
     <p class="tagline" style="font-size:.95rem;color:var(--dim);max-width:52ch">With mates, one of you is secretly the snitch. Work out who before you drive off.</p>
   </div>
 </section>
@@ -354,6 +359,7 @@
 <div id="role"><div class="role-card" id="role-card"></div></div>
 
 <div id="hud">
+  <div id="hide-tag"><b>The lock-up</b><span>Talk to the crew to hire them. Plan’s on the board. Masks by the door. Van when you’re ready.</span></div>
   <div class="haul"><span class="label">In the van</span><div id="haul-van">£0</div><div class="haul-sub"><span id="haul-pockets">Pockets: £0</span><span id="haul-next">★ £30,000</span></div><div class="stars"><i><u></u></i><i><u></u></i><i><u></u></i></div></div>
   <div id="alarm" hidden><div class="tape"></div><b id="alarm-t">POLICE IN</b><span id="alarm-s">1:30</span></div>
   <div class="crosshair"></div>
@@ -402,9 +408,10 @@
 
 <div id="turn"><div>Turn your phone sideways<span>Heist Kings plays best in landscape.</span></div></div>
 <div id="fade"></div>
-<script src="hk-models-1.js?v=3a39acc4"></script>
-<script src="hk-models-2.js?v=6cedf6a7"></script>
+<script src="hk-models-1.js?v=53864ff4"></script>
+<script src="hk-models-2.js?v=fd732156"></script>
+<script src="hk-models-3.js?v=a6637c7b"></script>
 <script src="hk-tex.js?v=27b646e2"></script>
-<script type="module" src="hk-game.js?v=181dab70"></script>
+<script type="module" src="hk-game.js?v=f7029a0f"></script>
 
 </html>
