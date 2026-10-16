@@ -97,6 +97,43 @@
   #hud { position: fixed; inset: 0; pointer-events: none; z-index: 5; display: none; }
   body[data-mode="play"] #hud, body[data-mode="pause"] #hud, body[data-mode="hideout"] #hud { display: block; }
   body.hideout .haul, body.hideout #help, body.hideout #alarm { display: none !important; }
+  /* the mic button (and your mates' name tags light up when they talk) */
+  #mic-btn { pointer-events: auto; position: absolute; right: 72px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); width: 46px; height: 46px; border-radius: 50%; background: var(--panel); border: 1px solid var(--line); display: grid; place-items: center; color: var(--dim); }
+  #mic-btn.on { color: #3ad06a; border-color: #3ad06a; } #mic-btn.on .x { display: none; } #mic-btn.talk { box-shadow: 0 0 0 4px rgba(58,208,106,.35); }
+  body.touch #mic-btn { bottom: auto; top: calc(14px + env(safe-area-inset-top, 0px)); right: 126px; }
+  .mk .nm.talk { background: #3ad06a; color: #08130c; }
+  /* drawing on your paper bag */
+  #draw { position: fixed; inset: 0; z-index: 30; display: none; place-items: center; background: rgba(6,8,16,.82); padding: 16px; }
+  body.drawing #draw { display: grid; }
+  .draw-box { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: grid; gap: 12px; width: min(420px, 100%); }
+  .draw-box h3 { margin: 0; font-family: var(--display); font-weight: 400; font-size: 1.5rem; }
+  #draw-c { width: min(360px, 78vw); aspect-ratio: 1; justify-self: center; background: #b88f5a; border-radius: 6px; touch-action: none; cursor: crosshair; box-shadow: inset 0 0 30px rgba(60,35,10,.35); }
+  .draw-tools { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .draw-tools button.sw { width: 34px; height: 34px; border-radius: 50%; border: 2px solid rgba(255,255,255,.25); }
+  .draw-tools button.sw.on { border-color: #fff; transform: scale(1.12); }
+  /* the gear locker */
+  #shop { position: fixed; inset: 0; z-index: 30; display: none; place-items: center; background: rgba(6,8,16,.82); padding: 16px; }
+  body.shopping #shop { display: grid; }
+  .shop-box { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: grid; gap: 10px; width: min(520px, 100%); max-height: 90vh; overflow: auto; }
+  .shop-box h3 { margin: 0; font-family: var(--display); font-weight: 400; font-size: 1.5rem; }
+  #shop-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .shop-it { display: flex; gap: 12px; align-items: center; justify-content: space-between; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; }
+  .shop-it.on { border-color: #3ad06a; } .shop-it b { display: block; } .shop-it .ln { color: var(--dim); font-size: .88rem; } .shop-it > div { min-width: 0; }
+  .shop-it button:disabled { opacity: .45; }
+  .bankline { font-family: var(--note); margin: 10px 0 0; }
+  /* the end: awards and photos */
+  .awards { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; margin: 14px 0 6px; }
+  .award { background: #fffdf6; border: 1px dashed rgba(42,33,22,.3); color: var(--paper-ink); border-radius: 4px 10px 10px 4px; padding: 10px 12px; display: grid; gap: 2px; box-shadow: 0 6px 18px rgba(0,0,0,.35); }
+  .award b { font-family: var(--display); font-weight: 400; font-size: 1.15rem; line-height: 1.1; }
+  .award .who { font-weight: 700; font-size: .9rem; } .award .ln { font-family: var(--note); font-size: .82rem; color: #5a4a30; }
+  .photos { display: flex; flex-wrap: wrap; gap: 14px; margin: 14px 0 8px; justify-content: center; }
+  .photos figure { margin: 0; background: #f6f3ea; padding: 8px 8px 0; box-shadow: 0 10px 24px rgba(0,0,0,.45); transform: rotate(var(--r)); width: min(240px, 42vw); }
+  .photos img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+  .photos figcaption { font-family: var(--note); color: #2a2116; font-size: .85rem; padding: 6px 2px 9px; text-align: center; }
+  /* hiding: a dark edge round the view (and the underside of the bed above you) */
+  #hidevig { position: fixed; inset: 0; pointer-events: none; z-index: 4; display: none; background: radial-gradient(ellipse 55% 60% at 50% 55%, rgba(0,0,0,0) 40%, rgba(0,0,0,.88) 100%); }
+  body.hiding[data-mode="play"] #hidevig, body.hiding[data-mode="pause"] #hidevig { display: block; }
+  body.under-bed #hidevig { background: linear-gradient(to bottom, #0b0907 0%, #0b0907 34%, rgba(11,9,7,.55) 44%, rgba(0,0,0,0) 56%), radial-gradient(ellipse 60% 50% at 50% 70%, rgba(0,0,0,0) 45%, rgba(0,0,0,.85) 100%); }
   #hide-tag { display: none; position: absolute; left: 16px; top: calc(14px + env(safe-area-inset-top, 0px)); background: var(--paper); color: var(--paper-ink); border-radius: 4px 10px 10px 4px; padding: 10px 14px; max-width: 260px; box-shadow: 0 8px 24px rgba(0,0,0,.45); transform: rotate(-1deg); }
   body.hideout #hide-tag { display: block; }
   #hide-tag b { font-family: var(--display); font-weight: 400; font-size: 1.4rem; display: block; line-height: 1.1; }
@@ -307,9 +344,10 @@
   <div class="screen-in">
     <div class="plan-head"><h2>Plan the job</h2><button class="btn" id="plan-back" type="button">Back</button></div>
     <div class="job">
-      <span class="label">Job 1</span>
-      <h3>Dribbles Manor</h3>
-      <p>Danny Dribbles is away at a match. His house is full of gold. Steve the guard is asleep in front of the telly, Biscuit the dog is out the back, and his Nan’s staying over. There’s a parrot.</p>
+      <div class="who-grid" id="p-jobs" style="margin-bottom:8px"></div>
+      <span class="label" id="p-job-n">Job 1</span>
+      <h3 id="p-job-name">Dribbles Manor</h3>
+      <p id="p-job-blurb">Danny Dribbles is away at a match. His house is full of gold. Steve the guard is asleep in front of the telly, Biscuit the dog is out the back, and his Nan’s staying over. There’s a parrot.</p>
       <div class="targets"><span>★ <b id="t1">£30,000</b></span><span>★★ <b id="t2">£55,000</b></span><span>★★★ <b id="t3">£80,000</b></span></div>
     </div>
     <div class="row-me"><span class="label">Hire your crew (each takes a cut)</span><div class="crew-grid" id="crew-grid"></div></div>
@@ -326,10 +364,12 @@
         <h3>Who are you?</h3>
         <div class="field"><label class="label" for="l-name">Your name</label><input id="l-name" maxlength="14" autocomplete="off" placeholder="Your name"></div>
         <div class="who-grid" id="l-who"></div>
+        <span class="label">Your mask</span>
+        <div class="who-grid" id="l-mask"></div>
       </div>
       <div class="lcard">
         <h3>Start a job</h3>
-        <p>You get a link to send your mates. 3 to 6 players, best with 4 or more. Talk on Discord while you play.</p>
+        <p>You get a link to send your mates. 3 to 6 players, best with 4 or more. You can talk to each other in the game (turn your mic on), or use Discord.</p>
         <button class="btn go" id="l-host" type="button">Start a job</button>
         <h3 style="margin-top:8px">Join a job</h3>
         <div class="field"><label class="label" for="l-code">Code from your mate</label><input id="l-code" class="code" maxlength="4" autocomplete="off" placeholder="ABCD"></div>
@@ -342,6 +382,11 @@
         <span class="label">Room code</span>
         <div class="room-code" id="l-room"></div>
         <button class="btn" id="l-copy" type="button">Copy the invite link</button>
+        <span class="label">The job</span>
+        <div class="who-grid" id="l-job"></div>
+        <span class="label">Your role</span>
+        <div class="who-grid" id="l-role"></div>
+        <p class="lnote" id="l-role-note" style="margin:0"></p>
         <span class="label">On the job</span>
         <ul class="plist" id="l-players"></ul>
         <button class="btn go" id="l-go" type="button">Start the job</button>
@@ -358,6 +403,19 @@
 
 <div id="role"><div class="role-card" id="role-card"></div></div>
 
+<div id="hidevig"></div>
+<div id="shop" role="dialog" aria-label="The gear locker"><div class="shop-box">
+  <div class="plan-head" style="margin:0"><h3>The gear locker</h3><button class="btn" id="shop-close" type="button">Done</button></div>
+  <p style="margin:0">In the bank: <b id="shop-bank">£0</b>. Your share of every job you get away with goes in here.</p>
+  <ul id="shop-list"></ul>
+</div></div>
+<div id="draw" role="dialog" aria-label="Draw on your paper bag"><div class="draw-box">
+  <h3>Draw on your paper bag</h3>
+  <canvas id="draw-c" width="256" height="256"></canvas>
+  <div class="draw-tools" id="draw-cols"></div>
+  <div class="draw-tools"><button class="chip" id="draw-thin" type="button">Thin pen</button><button class="chip" id="draw-thick" type="button">Thick pen</button><button class="chip" id="draw-classic" type="button">The classic face</button><button class="chip" id="draw-clear" type="button">Clear</button></div>
+  <div class="draw-tools"><button class="btn" id="draw-cancel" type="button">Cancel</button><button class="btn go" id="draw-done" type="button">Wear it</button></div>
+</div></div>
 <div id="hud">
   <div id="hide-tag"><b>The lock-up</b><span>Talk to the crew to hire them. Plan’s on the board. Masks by the door. Van when you’re ready.</span></div>
   <div class="haul"><span class="label">In the van</span><div id="haul-van">£0</div><div class="haul-sub"><span id="haul-pockets">Pockets: £0</span><span id="haul-next">★ £30,000</span></div><div class="stars"><i><u></u></i><i><u></u></i><i><u></u></i></div></div>
@@ -375,6 +433,7 @@
   <div id="phone" hidden></div>
   <div id="vote" hidden></div>
   <button id="pause-btn" type="button" aria-label="Pause"><span></span></button>
+  <button id="mic-btn" type="button" aria-label="Microphone" title="Mic (T)"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" fill="currentColor"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4M8.5 21h7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/><path class="x" d="M4 4l16 16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></button>
 </div>
 
 <div id="touch">
@@ -412,6 +471,6 @@
 <script src="hk-models-2.js?v=fd732156"></script>
 <script src="hk-models-3.js?v=a6637c7b"></script>
 <script src="hk-tex.js?v=27b646e2"></script>
-<script type="module" src="hk-game.js?v=f7029a0f"></script>
+<script type="module" src="hk-game.js?v=7add715e"></script>
 
 </html>
