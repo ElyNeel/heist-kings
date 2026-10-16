@@ -105,6 +105,11 @@
   #hide-tag span { display: block; }
   /* the mic button (and your mates' name tags light up when they talk) */
   #mic-btn { pointer-events: auto; position: absolute; right: 72px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); width: 46px; height: 46px; border-radius: 50%; background: var(--panel); border: 1px solid var(--line); display: grid; place-items: center; color: var(--dim); }
+  #shop-list .shop-h { font-weight: 800; letter-spacing: .06em; text-transform: uppercase; font-size: .75rem; opacity: .7; padding: 10px 2px 2px; list-style: none; }
+  #gadgets { pointer-events: auto; position: absolute; left: 16px; bottom: calc(52px + env(safe-area-inset-bottom, 0px)); display: flex; gap: 6px; }
+  #gadgets .gdg { display: flex; align-items: center; gap: 6px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 6px 10px; color: var(--text); font-weight: 800; font-size: .82rem; }
+  #gadgets .gdg kbd { font: 800 .72rem var(--body); background: rgba(255,255,255,.16); border-radius: 5px; padding: 1px 6px; } #gadgets .gdg kbd:empty { display: none; } #gadgets .gdg b { color: #ffd23a; } #gadgets .gdg.used { opacity: .4; }
+  body:not([data-mode="play"]) #gadgets { display: none; } body.touch #gadgets { bottom: auto; top: calc(120px + env(safe-area-inset-top, 0px)); }
   #lobby-btn { display: none; pointer-events: auto; position: absolute; right: 128px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); height: 46px; padding: 0 16px; border-radius: 23px; background: var(--panel); border: 1px solid var(--line); color: var(--text); font-weight: 800; }
   body.inroom[data-mode="hideout"] #lobby-btn { display: block; } body.touch #lobby-btn { bottom: auto; top: calc(14px + env(safe-area-inset-top, 0px)); right: 182px; }
   #mic-btn.on { color: #3ad06a; border-color: #3ad06a; } #mic-btn.on .x { display: none; } #mic-btn.talk { box-shadow: 0 0 0 4px rgba(58,208,106,.35); }
@@ -352,6 +357,8 @@
   <div class="screen-in">
     <div class="plan-head"><h2>Plan the job</h2><button class="btn" id="plan-back" type="button">Back</button></div>
     <div class="job">
+      <div class="who-grid" id="p-mode" style="margin-bottom:4px"></div>
+      <p id="p-season" class="rep" style="margin:0 0 8px"></p>
       <div id="p-jobs" style="margin-bottom:8px"></div>
       <span class="label" id="p-job-n">Job 1</span>
       <h3 id="p-job-name">Dribbles Manor</h3>
@@ -417,7 +424,7 @@
 <div id="hidevig"></div>
 <div id="shop" role="dialog" aria-label="The gear locker"><div class="shop-box">
   <div class="plan-head" style="margin:0"><h3>The gear locker</h3><button class="btn" id="shop-close" type="button">Done</button></div>
-  <p style="margin:0">In the bank: <b id="shop-bank">£0</b>. Your share of every job you get away with goes in here.</p>
+  <p style="margin:0">In the bank: <b id="shop-bank">£0</b>. Your share of every job you get away with goes in here. <span id="shop-sub"></span></p>
   <ul id="shop-list"></ul>
 </div></div>
 <div id="draw" role="dialog" aria-label="Draw on your paper bag"><div class="draw-box">
@@ -444,6 +451,7 @@
   <div id="phone" hidden></div>
   <div id="vote" hidden></div>
   <button id="pause-btn" type="button" aria-label="Pause"><span></span></button>
+  <div id="gadgets" hidden></div>
   <button id="lobby-btn" type="button" title="Lobby (Tab)">Lobby</button>
   <button id="mic-btn" type="button" aria-label="Microphone" title="Mic (T)"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" fill="currentColor"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4M8.5 21h7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/><path class="x" d="M4 4l16 16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></button>
 </div>
@@ -483,6 +491,6 @@
 <script src="hk-models-2.js?v=fd732156"></script>
 <script src="hk-models-3.js?v=a6637c7b"></script>
 <script src="hk-tex.js?v=27b646e2"></script>
-<script type="module" src="hk-game.js?v=ee18eb01"></script>
+<script type="module" src="hk-game.js?v=6519498b"></script>
 
 </html>
