@@ -88,6 +88,9 @@
   .opts { display: flex; flex-wrap: wrap; gap: 8px; }
   .chip { border: 1px solid var(--line); background: rgba(255,255,255,.05); padding: 8px 14px; border-radius: 99px; font-weight: 700; font-size: .9rem; }
   .chip.on { background: var(--paper); color: var(--paper-ink); border-color: var(--paper); }
+  .chip.locked { opacity: .55; } .chip.locked::after { content: 'LOCKED'; font-size: .62rem; letter-spacing: .08em; margin-left: 8px; opacity: .8; }
+  .jobmap { width: 100%; max-height: 42vh; object-fit: contain; border-radius: 12px; display: block; cursor: pointer; margin-bottom: 10px; box-shadow: 0 6px 24px rgba(0,0,0,.35); }
+  .rep { font-weight: 700; opacity: .9; } .unlock { color: #ffd23a; font-weight: 800; margin: 4px 0; }
   .plan-foot { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; justify-content: space-between; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; }
   .split { font-size: 1rem; line-height: 1.4; }
   .split b { font-family: var(--display); font-weight: 400; color: var(--cash); font-size: 1.15rem; }
@@ -97,8 +100,13 @@
   #hud { position: fixed; inset: 0; pointer-events: none; z-index: 5; display: none; }
   body[data-mode="play"] #hud, body[data-mode="pause"] #hud, body[data-mode="hideout"] #hud { display: block; }
   body.hideout .haul, body.hideout #help, body.hideout #alarm { display: none !important; }
+  body.couch #hide-tag, body.couch #marks, body.couch #toasts .tip { display: none !important; }
+  body.couch #prompt { bottom: calc(14px + env(safe-area-inset-bottom, 0px)); grid-auto-flow: column; align-items: center; } body.couch #prompt .pr-note { display: none; }
+  #hide-tag span { display: block; }
   /* the mic button (and your mates' name tags light up when they talk) */
   #mic-btn { pointer-events: auto; position: absolute; right: 72px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); width: 46px; height: 46px; border-radius: 50%; background: var(--panel); border: 1px solid var(--line); display: grid; place-items: center; color: var(--dim); }
+  #lobby-btn { display: none; pointer-events: auto; position: absolute; right: 128px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); height: 46px; padding: 0 16px; border-radius: 23px; background: var(--panel); border: 1px solid var(--line); color: var(--text); font-weight: 800; }
+  body.inroom[data-mode="hideout"] #lobby-btn { display: block; } body.touch #lobby-btn { bottom: auto; top: calc(14px + env(safe-area-inset-top, 0px)); right: 182px; }
   #mic-btn.on { color: #3ad06a; border-color: #3ad06a; } #mic-btn.on .x { display: none; } #mic-btn.talk { box-shadow: 0 0 0 4px rgba(58,208,106,.35); }
   body.touch #mic-btn { bottom: auto; top: calc(14px + env(safe-area-inset-top, 0px)); right: 126px; }
   .mk .nm.talk { background: #3ad06a; color: #08130c; }
@@ -344,10 +352,11 @@
   <div class="screen-in">
     <div class="plan-head"><h2>Plan the job</h2><button class="btn" id="plan-back" type="button">Back</button></div>
     <div class="job">
-      <div class="who-grid" id="p-jobs" style="margin-bottom:8px"></div>
+      <div id="p-jobs" style="margin-bottom:8px"></div>
       <span class="label" id="p-job-n">Job 1</span>
       <h3 id="p-job-name">Dribbles Manor</h3>
       <p id="p-job-blurb">Danny Dribbles is away at a match. His house is full of gold. Steve the guard is asleep in front of the telly, Biscuit the dog is out the back, and his Nan’s staying over. There’s a parrot.</p>
+      <p id="p-rep" class="rep"></p>
       <div class="targets"><span>★ <b id="t1">£30,000</b></span><span>★★ <b id="t2">£55,000</b></span><span>★★★ <b id="t3">£80,000</b></span></div>
     </div>
     <div class="row-me"><span class="label">Hire your crew (each takes a cut)</span><div class="crew-grid" id="crew-grid"></div></div>
@@ -389,11 +398,13 @@
         <p class="lnote" id="l-role-note" style="margin:0"></p>
         <span class="label">On the job</span>
         <ul class="plist" id="l-players"></ul>
+        <button class="btn" id="l-walk" type="button">Walk about the lock-up</button>
         <button class="btn go" id="l-go" type="button">Start the job</button>
         <div class="lnote" id="l-wait"></div>
       </div>
       <div class="rules">
-        <b>How it works.</b> You're robbing Dribbles Manor together. One of you is secretly the snitch and only they know.<br><br>
+        <b>The lock-up is the lobby.</b> Walk about, have a go on the bag, the hoop and the darts, or sit on the sofa next to a mate and play Kick-Off on the telly. Tab brings this back up.<br><br>
+        <b>How it works.</b> You're doing the job together. One of you is secretly the snitch and only they know.<br><br>
         The snitch has a burner phone: they can text the police, swap gold for fakes (fakes go <i>plink</i> when knocked) and drop a buzzing phone that brings the police quicker. They'll also "accidentally" drop things.<br><br>
         Heavy stuff needs two of you. When you're done, anyone can start the vote at the van: pick who to leave behind. Leave the snitch and get £30,000 of real gold, and you're away. Get it wrong and the van gets pulled over on the motorway.
       </div>
@@ -417,7 +428,7 @@
   <div class="draw-tools"><button class="btn" id="draw-cancel" type="button">Cancel</button><button class="btn go" id="draw-done" type="button">Wear it</button></div>
 </div></div>
 <div id="hud">
-  <div id="hide-tag"><b>The lock-up</b><span>Talk to the crew to hire them. Plan’s on the board. Masks by the door. Van when you’re ready.</span></div>
+  <div id="hide-tag"><b>The lock-up</b><span>Talk to the crew to hire them. Pick a job on the map. Masks by the door. Sofa for Kick-Off. Van when you’re ready.</span></div>
   <div class="haul"><span class="label">In the van</span><div id="haul-van">£0</div><div class="haul-sub"><span id="haul-pockets">Pockets: £0</span><span id="haul-next">★ £30,000</span></div><div class="stars"><i><u></u></i><i><u></u></i><i><u></u></i></div></div>
   <div id="alarm" hidden><div class="tape"></div><b id="alarm-t">POLICE IN</b><span id="alarm-s">1:30</span></div>
   <div class="crosshair"></div>
@@ -433,6 +444,7 @@
   <div id="phone" hidden></div>
   <div id="vote" hidden></div>
   <button id="pause-btn" type="button" aria-label="Pause"><span></span></button>
+  <button id="lobby-btn" type="button" title="Lobby (Tab)">Lobby</button>
   <button id="mic-btn" type="button" aria-label="Microphone" title="Mic (T)"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" fill="currentColor"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4M8.5 21h7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/><path class="x" d="M4 4l16 16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></button>
 </div>
 
@@ -471,6 +483,6 @@
 <script src="hk-models-2.js?v=fd732156"></script>
 <script src="hk-models-3.js?v=a6637c7b"></script>
 <script src="hk-tex.js?v=27b646e2"></script>
-<script type="module" src="hk-game.js?v=ea65581d"></script>
+<script type="module" src="hk-game.js?v=ee18eb01"></script>
 
 </html>
