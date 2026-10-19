@@ -113,6 +113,25 @@
   #lobby-btn { display: none; pointer-events: auto; position: absolute; right: 128px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); height: 46px; padding: 0 16px; border-radius: 23px; background: var(--panel); border: 1px solid var(--line); color: var(--text); font-weight: 800; }
   body.inroom[data-mode="hideout"] #lobby-btn { display: block; } body.touch #lobby-btn { bottom: auto; top: calc(14px + env(safe-area-inset-top, 0px)); right: 182px; }
   #mic-btn.on { color: #3ad06a; border-color: #3ad06a; } #mic-btn.on .x { display: none; } #mic-btn.talk { box-shadow: 0 0 0 4px rgba(58,208,106,.35); } #mic-btn.shout { box-shadow: 0 0 0 6px rgba(255,90,72,.55); color: #ff5a48; border-color: #ff5a48; }
+  /* Twitch chat votes */
+  #chatvote { text-align: left; white-space: normal; position: absolute; right: 16px; top: 38%; width: min(290px, calc(100vw - 32px)); background: rgba(24,10,44,.88); border: 1px solid #9146ff; border-radius: 10px; padding: 10px 12px; color: #fff; box-shadow: 0 10px 26px rgba(0,0,0,.4); display: grid; gap: 6px; }
+  #chatvote .cv-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; } #chatvote .cv-top b { font: 800 13px var(--body); letter-spacing: .1em; color: #c9a8ff; } #chatvote .cv-top span { font-size: 12px; opacity: .8; }
+  #chatvote .cv-row { position: relative; display: grid; grid-template-columns: 22px 1fr auto; gap: 8px; align-items: center; padding: 6px 8px; border-radius: 6px; background: rgba(255,255,255,.07); overflow: hidden; }
+  #chatvote .cv-row i { position: absolute; left: 0; top: 0; bottom: 0; background: rgba(145,70,255,.45); transition: width .4s; }
+  #chatvote .cv-row b, #chatvote .cv-row span, #chatvote .cv-row em { position: relative; } #chatvote .cv-row b { font: 800 15px var(--body); color: #c9a8ff; } #chatvote .cv-row span { font-weight: 700; font-size: 14px; } #chatvote .cv-row em { font-style: normal; font-weight: 800; font-variant-numeric: tabular-nums; }
+  body.touch #chatvote { top: 30%; }
+  /* streamer mode: no room codes on screen, bigger text */
+  body.streamer #l-room { filter: blur(12px); } body.streamer #l-qr { display: none !important; }
+  body.streamer #prompt, body.streamer #toasts, body.streamer #radio, body.streamer #walk, body.streamer #chatvote { zoom: 1.18; }
+  .m-row input[type="text"] { width: 160px; padding: 7px 10px; border-radius: 8px; border: 1px solid var(--line); background: rgba(0,0,0,.25); color: inherit; font: inherit; }
+  .m-note { margin: -4px 0 0; font-size: .82rem; opacity: .75; text-align: right; }
+  /* your first jobs: the checklist under the haul */
+  #walk { text-align: left; white-space: normal; position: absolute; left: 16px; top: calc(128px + env(safe-area-inset-top, 0px)); width: min(300px, calc(100vw - 32px)); background: rgba(10,14,26,.82); border: 1px solid var(--line); border-left: 4px solid var(--tape); border-radius: 8px; padding: 9px 12px 10px; color: var(--text); box-shadow: 0 8px 22px rgba(0,0,0,.35); }
+  #walk small { display: block; font: 800 10.5px var(--body); letter-spacing: .1em; text-transform: uppercase; color: var(--tape); margin-bottom: 3px; }
+  #walk p { margin: 0; font-size: .95rem; line-height: 1.35; }
+  #walk.wpop { animation: walkpop .5s cubic-bezier(.2,.9,.3,1.3); } @keyframes walkpop { from { transform: translateX(-12px); opacity: 0; } }
+  body.touch #walk { top: calc(112px + env(safe-area-inset-top, 0px)); font-size: .9em; }
+  body.cctv #walk { visibility: hidden; }
   /* your mic level: whisper, talking, shouting */
   #vmeter { position: fixed; z-index: 7; right: 128px; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); display: flex; align-items: center; gap: 8px; pointer-events: none; font: 800 12px var(--body); letter-spacing: .06em; text-transform: uppercase; color: #a9b1c6; text-shadow: 0 1px 3px #000; }
   #vmeter .lv { position: relative; width: 8px; height: 40px; border-radius: 4px; background: linear-gradient(#ff5a48 0 40%, #ffd23a 40% 88%, #3ad06a 88%); opacity: .35; overflow: hidden; }
@@ -519,6 +538,9 @@
     <div class="m-row"><label for="p-mus">Music</label><input type="range" id="p-mus" min="0" max="100" step="5" value="80"></div>
     <div class="m-row"><label for="p-sens">Look speed</label><input type="range" id="p-sens" min="0.3" max="2.5" step="0.1" value="1"></div>
     <div class="m-row"><span>Graphics</span><div class="opts" id="p-gfx"></div></div>
+    <div class="m-row"><label for="p-twitch">Twitch chat votes</label><input type="text" id="p-twitch" placeholder="your channel name" autocomplete="off" spellcheck="false"></div>
+    <p class="m-note" id="p-twitch-st">Type your Twitch channel and chat gets to vote on what happens in the house.</p>
+    <div class="m-row"><span>Streamer mode</span><button class="btn" id="p-streamer" type="button">Off</button></div>
     <p class="controls"><kbd>WASD</kbd> move · <kbd>Mouse</kbd> look · <kbd>E</kbd> grab, drop, open, use (hold to unscrew) · <kbd>Click</kbd> throw what you’re holding, or shove · <kbd>Right click</kbd> put it down gently · <kbd>C</kbd> sneak · <kbd>Shift</kbd> run · <kbd>Space</kbd> jump · <kbd>V</kbd> camera · <kbd>M</kbd> mask · <kbd>G</kbd> celebrate · <kbd>Q</kbd> the snitch's phone · <kbd>0</kbd> to <kbd>6</kbd> vote</p>
     <div class="m-row"><button class="btn" id="p-restart" type="button">Restart the job</button><button class="btn go" id="p-resume" type="button">Back to it</button></div>
   </div>
@@ -534,6 +556,6 @@
 <script src="hk-models-2.js?v=fd732156"></script>
 <script src="hk-models-3.js?v=a6637c7b"></script>
 <script src="hk-tex.js?v=27b646e2"></script>
-<script type="module" src="hk-game.js?v=d9d750fd"></script>
+<script type="module" src="hk-game.js?v=03e62aeb"></script>
 
 </html>
