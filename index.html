@@ -307,6 +307,21 @@
   .res .votes { display: grid; gap: 3px; font-variant-numeric: tabular-nums; }
   .res .votes div { display: flex; justify-content: space-between; gap: 12px; border-bottom: 1px dashed rgba(42,33,22,.25); padding: 2px 0; font-size: .92rem; }
   .res.snitchwin { background: #1d0c0a; color: #ffe0d8; } .res.snitchwin .label { color: #e8a090; } .res.snitchwin .votes div, .res.snitchwin .cuts div { border-color: rgba(255,224,216,.2); }
+  /* the Fence's offer for the van, the split, and who loaded what */
+  .res .sale { display: grid; gap: 6px; }
+  .res .offer, .res .split, .res .loadboard { display: grid; gap: 3px; font-variant-numeric: tabular-nums; }
+  .res .offer div { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 12px; align-items: baseline; border-bottom: 1px dashed rgba(42,33,22,.25); padding: 2px 0; font-size: .92rem; }
+  .res .offer i { font-style: normal; font-size: .78rem; font-weight: 700; } .res .offer i.up { color: #127a3e; } .res .offer i.dn { color: #b8302a; } .res .offer i.want { background: #ffd42a; color: #1a1400; padding: 0 6px; border-radius: 4px; }
+  .res .offer .more span { font-style: italic; color: #6a5a40; }
+  .res .split b { color: #127a3e; font-family: var(--display); font-weight: 400; font-size: 1.25rem; } .res.snitchwin .split b, .res.busted .split b { color: #7affc0; } .res.busted .offer i.dn, .res.snitchwin .offer i.dn { color: #ff8a7a; } .res.busted .offer i.up, .res.snitchwin .offer i.up { color: #7affc0; } .res.busted .offer div, .res.busted .split .me { border-color: rgba(255,224,216,.2); }
+  .res .split div { display: flex; justify-content: space-between; gap: 12px; padding: 2px 0; } .res .split .me { font-weight: 800; font-size: 1.15rem; border-top: 2px solid rgba(42,33,22,.4); padding-top: 5px; }
+  .res .loadboard .label i { font-style: normal; font-size: .82em; opacity: .8; }
+  .res .loadboard div { display: grid; grid-template-columns: minmax(70px, auto) minmax(0, 1fr) auto; gap: 10px; align-items: center; font-size: .92rem; }
+  .res .loadboard div > i { height: 10px; border-radius: 5px; background: rgba(42,33,22,.12); overflow: hidden; } .res .loadboard u { display: block; height: 100%; background: linear-gradient(90deg, #c8961a, #ffd42a); border-radius: 5px; }
+  .res.snitchwin .offer div { border-color: rgba(255,224,216,.2); } .res.snitchwin .loadboard div > i { background: rgba(255,224,216,.15); }
+  .res .unlock { color: #9a5a00; } .res.busted .unlock, .res.snitchwin .unlock { color: #ffd23a; }
+  .res .stashline { margin: 0; font-weight: 700; background: rgba(42,33,22,.08); border-left: 4px solid #c8961a; padding: 8px 12px; border-radius: 4px; }
+  .res.busted .stashline { display: none; }
   /* short screens (phones on their side) */
   @media (max-height: 540px) {
     .screen { padding: 14px 16px; } .screen-in { gap: 12px; }
@@ -491,6 +506,6 @@
 <script src="hk-models-2.js?v=fd732156"></script>
 <script src="hk-models-3.js?v=a6637c7b"></script>
 <script src="hk-tex.js?v=27b646e2"></script>
-<script type="module" src="hk-game.js?v=4c7c95f4"></script>
+<script type="module" src="hk-game.js?v=ab716dcb"></script>
 
 </html>
