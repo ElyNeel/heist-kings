@@ -261,6 +261,8 @@
   /* ---------- pause ---------- */
   #pause { position: fixed; inset: 0; z-index: 25; display: none; place-items: center; background: rgba(5,8,16,.6); padding: 16px; }
   body[data-mode="pause"] #pause { display: grid; }
+  #pause .p-end { flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+  #pause .p-end .btn.warn { background: #b8322a; color: #fff; border-color: #b8322a; }
   .card { width: min(440px, 100%); max-height: calc(100% - 16px); overflow-y: auto; background: var(--panel-solid); border: 1px solid var(--line); border-radius: 18px; padding: 20px; display: grid; gap: 14px; box-sizing: border-box; }
   .card h2 { margin: 0; font-family: var(--display); font-weight: 400; font-size: 1.8rem; }
   .m-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
@@ -542,7 +544,8 @@
     <p class="m-note" id="p-twitch-st">Type your Twitch channel and chat gets to vote on what happens in the house.</p>
     <div class="m-row"><span>Streamer mode</span><button class="btn" id="p-streamer" type="button">Off</button></div>
     <p class="controls"><kbd>WASD</kbd> move · <kbd>Mouse</kbd> look · <kbd>E</kbd> grab, drop, open, use (hold to unscrew) · <kbd>Click</kbd> throw what you’re holding, or shove · <kbd>Right click</kbd> put it down gently · <kbd>C</kbd> sneak · <kbd>Shift</kbd> run · <kbd>Space</kbd> jump · <kbd>V</kbd> camera · <kbd>M</kbd> mask · <kbd>G</kbd> celebrate · <kbd>Q</kbd> the snitch's phone · <kbd>0</kbd> to <kbd>6</kbd> vote</p>
-    <div class="m-row"><button class="btn" id="p-restart" type="button">Restart the job</button><button class="btn go" id="p-resume" type="button">Back to it</button></div>
+    <div class="m-row p-end"><button class="btn" id="p-leave" type="button">Back to the lock-up</button><button class="btn" id="p-restart" type="button">Restart the job</button><button class="btn go" id="p-resume" type="button">Back to it</button></div>
+    <p class="m-note" id="p-leave-note" hidden></p>
   </div>
 </div>
 
@@ -556,6 +559,6 @@
 <script src="hk-models-2.js?v=fd732156"></script>
 <script src="hk-models-3.js?v=a6637c7b"></script>
 <script src="hk-tex.js?v=27b646e2"></script>
-<script type="module" src="hk-game.js?v=03e62aeb"></script>
+<script type="module" src="hk-game.js?v=ceb91e4f"></script>
 
 </html>
