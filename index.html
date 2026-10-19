@@ -112,7 +112,31 @@
   body:not([data-mode="play"]) #gadgets { display: none; } body.touch #gadgets { bottom: auto; top: calc(120px + env(safe-area-inset-top, 0px)); }
   #lobby-btn { display: none; pointer-events: auto; position: absolute; right: 128px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); height: 46px; padding: 0 16px; border-radius: 23px; background: var(--panel); border: 1px solid var(--line); color: var(--text); font-weight: 800; }
   body.inroom[data-mode="hideout"] #lobby-btn { display: block; } body.touch #lobby-btn { bottom: auto; top: calc(14px + env(safe-area-inset-top, 0px)); right: 182px; }
-  #mic-btn.on { color: #3ad06a; border-color: #3ad06a; } #mic-btn.on .x { display: none; } #mic-btn.talk { box-shadow: 0 0 0 4px rgba(58,208,106,.35); }
+  #mic-btn.on { color: #3ad06a; border-color: #3ad06a; } #mic-btn.on .x { display: none; } #mic-btn.talk { box-shadow: 0 0 0 4px rgba(58,208,106,.35); } #mic-btn.shout { box-shadow: 0 0 0 6px rgba(255,90,72,.55); color: #ff5a48; border-color: #ff5a48; }
+  /* your mic level: whisper, talking, shouting */
+  #vmeter { position: fixed; z-index: 7; right: 128px; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); display: flex; align-items: center; gap: 8px; pointer-events: none; font: 800 12px var(--body); letter-spacing: .06em; text-transform: uppercase; color: #a9b1c6; text-shadow: 0 1px 3px #000; }
+  #vmeter .lv { position: relative; width: 8px; height: 40px; border-radius: 4px; background: linear-gradient(#ff5a48 0 40%, #ffd23a 40% 88%, #3ad06a 88%); opacity: .35; overflow: hidden; }
+  #vmeter .lv i { position: absolute; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,.9); mix-blend-mode: overlay; }
+  #vmeter[data-zone="1"] { color: #ffd23a; } #vmeter[data-zone="2"] { color: #ff5a48; animation: shake .15s infinite; } #vmeter[data-zone="1"] .lv, #vmeter[data-zone="2"] .lv { opacity: 1; }
+  body.touch #vmeter { bottom: auto; top: calc(20px + env(safe-area-inset-top, 0px)); right: 180px; }
+  body:not([data-mode="play"]) #vmeter { display: none; }
+  /* the security camera look (locked in the bathroom) */
+  body.cctv canvas { filter: saturate(.35) contrast(1.18) brightness(1.08); }
+  body.cctv #hud .haul, body.cctv #help, body.cctv #hud .crosshair, body.cctv #marks { visibility: hidden; }
+  #cctv-ov { position: fixed; inset: 0; z-index: 5; pointer-events: none; font: 700 clamp(13px, 1.6vw, 18px) ui-monospace, Menlo, Consolas, monospace; color: #e8ffe8; text-shadow: 0 0 6px rgba(0,0,0,.9); background: repeating-linear-gradient(0deg, rgba(0,0,0,.16) 0 1px, transparent 1px 3px), radial-gradient(120% 90% at 50% 50%, transparent 55%, rgba(0,0,0,.55)); }
+  #cctv-ov span { position: absolute; } #cctv-ov .cam { left: 22px; top: calc(18px + env(safe-area-inset-top, 0px)); } #cctv-ov .rec { right: 22px; top: calc(18px + env(safe-area-inset-top, 0px)); display: flex; align-items: center; gap: 8px; }
+  #cctv-ov .rec i, .reel .rec i { width: 11px; height: 11px; border-radius: 50%; background: #ff3b30; animation: blink 1s steps(2) infinite; }
+  #cctv-ov .ts { left: 22px; bottom: calc(110px + env(safe-area-inset-bottom, 0px)); } #cctv-ov .hint { right: 22px; bottom: calc(110px + env(safe-area-inset-bottom, 0px)); opacity: .8; }
+  @keyframes blink { 50% { opacity: 0; } }
+  /* the CCTV reel on the end screen */
+  .res .reel { display: grid; gap: 6px; }
+  .res .reel .mons { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; }
+  .res .mon { margin: 0; display: grid; gap: 4px; }
+  .res .mon .scr { position: relative; aspect-ratio: 16 / 9; background: #0a0d10; border: 4px solid #22262c; border-radius: 6px; overflow: hidden; box-shadow: 0 6px 16px rgba(0,0,0,.35); font: 700 10px ui-monospace, Menlo, Consolas, monospace; color: #e8ffe8; text-shadow: 0 0 4px #000; }
+  .res .mon img { display: block; width: 100%; height: 100%; object-fit: cover; filter: saturate(.4) contrast(1.2) brightness(1.08); }
+  .res .mon .scr::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, rgba(0,0,0,.18) 0 1px, transparent 1px 3px), radial-gradient(120% 100% at 50% 50%, transparent 55%, rgba(0,0,0,.5)); pointer-events: none; }
+  .res .mon .scr span { position: absolute; z-index: 1; } .res .mon .cam { left: 7px; top: 6px; } .res .mon .rec { right: 7px; top: 6px; display: flex; align-items: center; gap: 4px; } .res .mon .rec i { width: 7px; height: 7px; } .res .mon .ts { left: 7px; bottom: 6px; }
+  .res .mon figcaption { font: 800 .82rem var(--body); text-transform: uppercase; letter-spacing: .04em; }
   body.touch #mic-btn { bottom: auto; top: calc(14px + env(safe-area-inset-top, 0px)); right: 126px; }
   .mk .nm.talk { background: #3ad06a; color: #08130c; }
   /* drawing on your paper bag */
@@ -307,6 +331,7 @@
   .res .votes { display: grid; gap: 3px; font-variant-numeric: tabular-nums; }
   .res .votes div { display: flex; justify-content: space-between; gap: 12px; border-bottom: 1px dashed rgba(42,33,22,.25); padding: 2px 0; font-size: .92rem; }
   .res.snitchwin { background: #1d0c0a; color: #ffe0d8; } .res.snitchwin .label { color: #e8a090; } .res.snitchwin .votes div, .res.snitchwin .cuts div { border-color: rgba(255,224,216,.2); }
+  .qr { margin: 0; display: grid; justify-items: start; gap: 4px; } .qr canvas { width: 132px; height: 132px; image-rendering: pixelated; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,.3); } .qr figcaption { font-size: .8rem; opacity: .75; }
   /* the Fence's offer for the van, the split, and who loaded what */
   .res .sale { display: grid; gap: 6px; }
   .res .offer, .res .split, .res .loadboard { display: grid; gap: 3px; font-variant-numeric: tabular-nums; }
@@ -413,6 +438,7 @@
         <span class="label">Room code</span>
         <div class="room-code" id="l-room"></div>
         <button class="btn" id="l-copy" type="button">Copy the invite link</button>
+        <figure class="qr" id="l-qr" hidden><div></div><figcaption>Or scan it with a phone</figcaption></figure>
         <span class="label">The job</span>
         <div class="who-grid" id="l-job"></div>
         <span class="label">Your role</span>
@@ -428,6 +454,8 @@
         <b>The lock-up is the lobby.</b> Walk about, have a go on the bag, the hoop and the darts, or sit on the sofa next to a mate and play Kick-Off on the telly. Tab brings this back up.<br><br>
         <b>How it works.</b> You're doing the job together. One of you is secretly the snitch and only they know.<br><br>
         The snitch has a burner phone: they can text the police, swap gold for fakes (fakes go <i>plink</i> when knocked) and drop a buzzing phone that brings the police quicker. They'll also "accidentally" drop things.<br><br>
+        <b>Watch out for the guard.</b> The second time he gets you, he locks you in the bathroom. A mate can let you out (hold E on the bathroom door). While you wait, you watch the house cameras and shout directions.<br><br>
+        Press X to go floppy, and a mate can pick you up and carry you. Or throw you. Whisper and only your mates hear you; shout and the whole house wakes up.<br><br>
         Heavy stuff needs two of you. When you're done, anyone can start the vote at the van: pick who to leave behind. Leave the snitch and get £30,000 of real gold, and you're away. Get it wrong and the van gets pulled over on the motorway.
       </div>
     </div>
@@ -462,7 +490,7 @@
   <div id="prompt"></div>
   <div id="mash" hidden><b>MASH SPACE TO BREAK FREE</b><div class="bar"><div id="mash-fill"></div></div></div>
   <div id="grab-hint" hidden>Biscuit’s got your leg! Jump or shove to shake him off</div>
-  <div id="help"><kbd>WASD</kbd> move · <kbd>E</kbd> grab / drop · <kbd>Click</kbd> throw or shove · <kbd>Right click</kbd> put down gently · <kbd>C</kbd> sneak · <kbd>Shift</kbd> run · <kbd>V</kbd> camera · <kbd>Esc</kbd> pause</div>
+  <div id="help"><kbd>WASD</kbd> move · <kbd>E</kbd> grab / drop · <kbd>Click</kbd> throw or shove · <kbd>Right click</kbd> put down gently · <kbd>C</kbd> sneak · <kbd>Shift</kbd> run · <kbd>V</kbd> camera · <kbd>X</kbd> go floppy · <kbd>Esc</kbd> pause</div>
   <div id="phone" hidden></div>
   <div id="vote" hidden></div>
   <button id="pause-btn" type="button" aria-label="Pause"><span></span></button>
@@ -506,6 +534,6 @@
 <script src="hk-models-2.js?v=fd732156"></script>
 <script src="hk-models-3.js?v=a6637c7b"></script>
 <script src="hk-tex.js?v=27b646e2"></script>
-<script type="module" src="hk-game.js?v=ab716dcb"></script>
+<script type="module" src="hk-game.js?v=d9d750fd"></script>
 
 </html>
