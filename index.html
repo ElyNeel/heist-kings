@@ -167,6 +167,26 @@
   .draw-tools { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
   .draw-tools button.sw { width: 34px; height: 34px; border-radius: 50%; border: 2px solid rgba(255,255,255,.25); }
   .draw-tools button.sw.on { border-color: #fff; transform: scale(1.12); }
+  /* the wardrobe (your locker): a panel down the right, you in the middle of the screen */
+  #wardrobe { position: fixed; top: 0; right: 0; bottom: 0; z-index: 30; display: none; width: min(400px, 100%); padding: 12px; padding-top: calc(12px + env(safe-area-inset-top, 0px)); padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px)); }
+  body.wardrobe #wardrobe { display: block; } body.wardrobe #hud, body.wardrobe #prompt, body.wardrobe #marks { visibility: hidden; }
+  .wd-box { height: 100%; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 14px; display: grid; grid-template-rows: auto auto 1fr auto; gap: 10px; min-height: 0; }
+  .wd-box h3 { margin: 0; font-family: var(--display); font-weight: 400; font-size: 1.4rem; }
+  .wd-tabs { display: flex; flex-wrap: wrap; gap: 6px; } .wd-tabs .chip { padding: 6px 11px; font-size: .82rem; }
+  .wd-body { overflow: auto; min-height: 0; display: grid; gap: 14px; align-content: start; padding-right: 2px; }
+  .wd-sec { display: grid; gap: 8px; } .wd-sec > b { font-weight: 800; letter-spacing: .06em; text-transform: uppercase; font-size: .72rem; opacity: .7; }
+  .wd-opts { display: flex; flex-wrap: wrap; gap: 6px; }
+  .wd-opt { border: 1px solid var(--line); background: rgba(255,255,255,.05); color: var(--text); border-radius: 10px; padding: 8px 11px; font-weight: 700; font-size: .86rem; display: inline-flex; gap: 6px; align-items: center; }
+  .wd-opt.on { background: var(--paper); color: var(--paper-ink); border-color: var(--paper); }
+  .wd-opt.lock { opacity: .6; } .wd-opt.lock small { font-weight: 800; color: var(--tape); }
+  .wd-sw { width: 32px; height: 32px; border-radius: 50%; border: 2px solid rgba(255,255,255,.22); padding: 0; }
+  .wd-sw.on { border-color: #fff; box-shadow: 0 0 0 2px rgba(255,255,255,.35); transform: scale(1.1); }
+  .wd-sw.none { background: repeating-linear-gradient(45deg, rgba(255,255,255,.15) 0 4px, transparent 4px 8px); }
+  .wd-gear { display: flex; gap: 10px; align-items: center; justify-content: space-between; padding: 9px 11px; border: 1px solid var(--line); border-radius: 10px; }
+  .wd-gear.on { border-color: #3ad06a; } .wd-gear b { display: block; } .wd-gear span { color: var(--dim); font-size: .85rem; } .wd-gear > div { min-width: 0; }
+  .wd-foot { margin: 0; color: var(--dim); font-size: .86rem; min-height: 1.2em; }
+  .wd-turn { display: flex; gap: 6px; } .wd-turn .btn { padding: 6px 12px; }
+  @media (max-width: 720px) { #wardrobe { top: auto; left: 0; width: 100%; height: 56vh; } }
   /* the gear locker */
   #shop { position: fixed; inset: 0; z-index: 30; display: none; place-items: center; background: rgba(6,8,16,.82); padding: 16px; }
   body.shopping #shop { display: grid; }
@@ -491,6 +511,12 @@
   <p style="margin:0">Your gear and clothes. Pick what you wear on the next job, and order more on the laptop. In the bank: <b id="shop-bank">£0</b>. <span id="shop-sub"></span></p>
   <ul id="shop-list"></ul>
 </div></div>
+<div id="wardrobe" role="dialog" aria-label="Your look"><div class="wd-box">
+  <div class="plan-head" style="margin:0"><h3>Your look</h3><span class="wd-turn"><button class="btn" id="wd-left" type="button" aria-label="Turn left">&#8634;</button><button class="btn" id="wd-right" type="button" aria-label="Turn right">&#8635;</button><button class="btn go" id="wd-done" type="button">Done</button></span></div>
+  <nav class="wd-tabs" id="wd-tabs"></nav>
+  <div class="wd-body" id="wd-body"></div>
+  <p class="wd-foot" id="wd-foot"></p>
+</div></div>
 <div id="draw" role="dialog" aria-label="Draw on your paper bag"><div class="draw-box">
   <h3>Draw on your paper bag</h3>
   <canvas id="draw-c" width="256" height="256"></canvas>
@@ -561,6 +587,6 @@
 <script src="hk-models-4.js?v=a6637c7b"></script>
 <script src="hk-tex.js?v=3060a35e"></script>
 <script>window.__HK_SFX_URL = "hk-sfx.json?v=1b02da5b"; window.__HK_MUSIC_URL = "hk-music.json?v=2beb7e3c"; </script>
-<script type="module" src="hk-game.js?v=b033987f"></script>
+<script type="module" src="hk-game.js?v=dab5a406"></script>
 
 </html>
