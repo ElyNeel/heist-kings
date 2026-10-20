@@ -45,8 +45,8 @@
   .tape { background: repeating-linear-gradient(-45deg, var(--tape) 0 22px, #111 22px 44px); }
 
   /* ---------- loading ---------- */
-  #loading { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; background: radial-gradient(90% 70% at 50% 100%, #1b2a4a, var(--ink) 70%); transition: opacity .7s; }
-  #loading.done { opacity: 0; pointer-events: none; }
+  #loading { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center; background: radial-gradient(90% 70% at 50% 100%, #1b2a4a, var(--ink) 70%); }
+  #loading.done { opacity: 0; pointer-events: none; transition: opacity .7s; }
   .load-in { width: min(380px, calc(100% - 48px)); text-align: center; display: grid; gap: 14px; }
   #loading .logo { font-size: clamp(2.8rem, 12vw, 4.6rem); }
   .bar { height: 10px; border-radius: 99px; background: rgba(255,255,255,.08); overflow: hidden; }
@@ -559,6 +559,6 @@
 <script src="hk-models-2.js?v=fd732156"></script>
 <script src="hk-models-3.js?v=a6637c7b"></script>
 <script src="hk-tex.js?v=27b646e2"></script>
-<script type="module" src="hk-game.js?v=f86141dc"></script>
+<script type="module" src="hk-game.js?v=6695b1d1"></script>
 
 </html>
