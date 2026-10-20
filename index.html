@@ -182,7 +182,12 @@
   .wd-sw { width: 32px; height: 32px; border-radius: 50%; border: 2px solid rgba(255,255,255,.22); padding: 0; }
   .wd-sw.on { border-color: #fff; box-shadow: 0 0 0 2px rgba(255,255,255,.35); transform: scale(1.1); }
   .wd-sw.none { background: repeating-linear-gradient(45deg, rgba(255,255,255,.15) 0 4px, transparent 4px 8px); }
-  .wd-gear { display: flex; gap: 10px; align-items: center; justify-content: space-between; padding: 9px 11px; border: 1px solid var(--line); border-radius: 10px; }
+  .wd-gear { display: flex; gap: 12px; align-items: center; justify-content: space-between; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; }
+  .wd-tog { flex: none; display: inline-flex; align-items: center; gap: 8px; background: none; border: 0; padding: 4px 0; color: var(--dim); font: 800 .78rem var(--body); text-transform: uppercase; letter-spacing: .06em; cursor: pointer; }
+  .wd-tog i { position: relative; width: 44px; height: 24px; border-radius: 12px; background: rgba(255,255,255,.14); transition: background .15s; }
+  .wd-tog i::after { content: ''; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: #f3ead7; transition: transform .15s; }
+  .wd-tog.on { color: #3ad06a; } .wd-tog.on i { background: #2a9a52; } .wd-tog.on i::after { transform: translateX(20px); }
+  .wd-tog em { font-style: normal; width: 2.4em; text-align: left; }
   .wd-gear.on { border-color: #3ad06a; } .wd-gear b { display: block; } .wd-gear span { color: var(--dim); font-size: .85rem; } .wd-gear > div { min-width: 0; }
   .wd-foot { margin: 0; color: var(--dim); font-size: .86rem; min-height: 1.2em; }
   .wd-turn { display: flex; gap: 6px; } .wd-turn .btn { padding: 6px 12px; }
@@ -587,6 +592,6 @@
 <script src="hk-models-4.js?v=a6637c7b"></script>
 <script src="hk-tex.js?v=3060a35e"></script>
 <script>window.__HK_SFX_URL = "hk-sfx.json?v=1b02da5b"; window.__HK_MUSIC_URL = "hk-music.json?v=2beb7e3c"; </script>
-<script type="module" src="hk-game.js?v=dab5a406"></script>
+<script type="module" src="hk-game.js?v=755e8378"></script>
 
 </html>
